@@ -62,7 +62,7 @@ alta y ejecute todas las celdas. Respalda en Drive después de cada capítulo y 
 **Local:**
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt tensorflow-cpu && pip install --no-deps timeseries-cv==0.1.5
 FC_PROFILE=smoke bash scripts/run_all.sh   # prueba rápida con serie sintética (results_smoke/)
 bash scripts/run_all.sh                    # corrida completa con datos reales (horas: búsqueda de 9 344 redes)
 ```

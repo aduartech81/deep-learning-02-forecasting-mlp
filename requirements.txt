@@ -1,6 +1,8 @@
-# Entorno completo del análisis (Colab Pro o local). TensorFlow ya viene en Colab.
-tensorflow>=2.17
-timeseries-cv==0.1.5
+# Entorno del análisis (Colab Pro o local). TensorFlow ya viene en Colab.
+# El libro se construye en GitHub Actions (jupyter-book), no hace falta instalarlo aquí.
+# Fuera de Colab instale también: pip install tensorflow-cpu
+# timeseries-cv 0.1.5 declara numpy<2 (TensorFlow reciente exige numpy 2); solo usa funciones básicas de numpy,
+# así que se instala aparte, sin dependencias:  pip install --no-deps timeseries-cv==0.1.5
 scikit-learn>=1.5
 statsmodels>=0.14
 pandas>=2.2
@@ -16,4 +18,3 @@ pytest>=8
 jupytext>=1.16
 nbconvert>=7
 ipykernel>=6
-jupyter-book==1.0.4.post1

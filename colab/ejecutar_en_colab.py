@@ -44,7 +44,7 @@ print("capítulos terminados:", done or "ninguno todavía")
 
 # %%
 # 4. Dependencias (TensorFlow ya viene en Colab)
-subprocess.run("pip -q install -r requirements.txt", shell=True, check=True)
+subprocess.run("pip -q install -r requirements.txt && pip -q install --no-deps timeseries-cv==0.1.5", shell=True, check=True)
 import tensorflow as tf, sklearn
 print("TensorFlow", tf.__version__, "| scikit-learn", sklearn.__version__)
 
