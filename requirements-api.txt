@@ -3,6 +3,7 @@ fastapi>=0.115
 uvicorn[standard]>=0.30
 pydantic>=2.6
 tensorflow-cpu==2.21.0
-scikit-learn>=1.5  # se fija a la versión de entrenamiento tras la corrida real
+keras==3.13.2
+scikit-learn==1.6.1   # misma versión con la que se ajustaron los escaladores (Colab)
 numpy>=1.26
 joblib>=1.4

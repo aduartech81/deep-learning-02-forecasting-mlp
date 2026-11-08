@@ -10,8 +10,25 @@ forma exhaustiva la mejor arquitectura para cada una de las **16 combinaciones l
 diagnostica los residuos con el **test BDS**, modela también la **volatilidad** y despliega el modelo como una
 **API FastAPI** con Docker, pruebas unitarias e integración continua.
 
-> **Estado:** código completo y probado de punta a punta con una serie sintética. La ejecución con los datos
-> reales de Binance se hace en Google Colab Pro (ver abajo); los resultados se publicarán al terminar.
+> **Estado:** ejecutado completo con los datos reales de Binance (3 226 días, 2018-01-01 → 2026-10-31) en Google
+> Colab Pro (8 núcleos, 51 GB). Los notebooks publicados contienen las salidas reales.
+
+## Resultados principales
+
+| | Resultado |
+|---|---|
+| Partición | CV: 2 903 días (2018 → 13 dic 2025) · hold-out intocable: 322 días (14 dic 2025 → 31 oct 2026) |
+| Búsqueda de arquitectura | 9 344 redes en 2 h 53 min; ganadoras de 2–3 capas, anchas (256) y con Dropout en la última capa |
+| **Precio: MLP vs ingenuo (validación, MAPE)** | MLP 7,2 / 10,5 / 13,5 / 12,5 % vs ingenuo 3,7 / 5,1 / 6,3 / 7,2 % (H = 7 / 14 / 21 / 28) |
+| **Precio: hold-out** | Los 4 modelos desplegados pierden contra el ingenuo (MAPE 6,0 / 5,1 / 6,2 / 7,4 % vs 3,1 / 4,4 / 5,6 / 6,7 %) |
+| Estrategias de validación | Forward Chaining: realista (entrena siempre con el pasado). K-Fold: optimista en los bloques con cambio de régimen. Group K-Fold: la peor estimación (pocas ventanas, fuga en 30/80 folds) |
+| Residuos (BDS, h = 1) | No son iid en ningún fold de Forward Chaining ni en el hold-out |
+| **Volatilidad** | El MLP sí le gana al ingenuo en RMSE del hold-out en 12 de 16 configuraciones |
+
+**Conclusión.** Usando solo su propio pasado, el cierre de Bitcoin se comporta casi como un paseo aleatorio: el
+pronóstico ingenuo ("mañana igual que hoy") le gana al MLP en todos los horizontes. La volatilidad, en cambio, sí tiene
+estructura que la red aprovecha. Es un resultado negativo honesto, sostenido por un protocolo sin fuga y por la
+comparación contra referencias simples (detalle en el capítulo 9).
 
 **Jupyter Book:** https://aduartech81.github.io/deep-learning-02-forecasting-mlp/
 
