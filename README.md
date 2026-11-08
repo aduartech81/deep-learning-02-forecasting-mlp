@@ -30,7 +30,9 @@ pronóstico ingenuo ("mañana igual que hoy") le gana al MLP en todos los horizo
 estructura que la red aprovecha. Es un resultado negativo honesto, sostenido por un protocolo sin fuga y por la
 comparación contra referencias simples (detalle en el capítulo 9).
 
-**Jupyter Book:** https://aduartech81.github.io/deep-learning-02-forecasting-mlp/
+**Jupyter Book:** https://aduartech81.github.io/deep-learning-02-forecasting-mlp/  
+**Dashboard:** https://deep-learning-02-forecasting-mlp.onrender.com/ (código en `dashboard/`)  
+**API:** https://deep-learning-02-forecasting-api.onrender.com/docs (FastAPI en Docker)
 
 ## Qué hace diferente a este proyecto
 
@@ -93,6 +95,11 @@ curl -X POST localhost:8000/predict -H "Content-Type: application/json" -d '{"la
 ```
 
 `GET /info` indica cuántos lags espera el modelo de cada horizonte. Documentación interactiva en `/docs`.
+
+`Dockerfile` sirve la API con TensorFlow (como pide la guía). `Dockerfile.lite` usa los mismos pesos exportados a numpy
+(`scripts/export_numpy.py`, `INFERENCE_BACKEND=numpy`): en inferencia el MLP es una cadena de capas densas con ReLU,
+así que da las mismas predicciones (verificado en `tests/test_model.py`) con 180 MB de RAM en vez de 680 MB; es la
+variante desplegada en Render (`render.yaml`).
 
 ## Datos
 

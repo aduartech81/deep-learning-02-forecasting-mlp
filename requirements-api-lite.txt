@@ -1,0 +1,7 @@
+# API sin TensorFlow (INFERENCE_BACKEND=numpy): cabe en 512 MB de RAM (plan gratuito de Render)
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.6
+scikit-learn==1.6.1
+numpy>=1.26
+joblib>=1.4

@@ -1,0 +1,9 @@
+# Variante ligera de la API: mismos pesos, inferencia en numpy (sin TensorFlow). Usada en Render (plan gratuito).
+FROM python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 INFERENCE_BACKEND=numpy
+WORKDIR /srv
+COPY requirements-api-lite.txt .
+RUN pip install --no-cache-dir -r requirements-api-lite.txt
+COPY app/ ./app/
+EXPOSE 8000
+CMD ["sh", "-c", "uvicorn app.api:app --host 0.0.0.0 --port ${PORT:-8000}"]

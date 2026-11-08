@@ -97,7 +97,7 @@ key.style.hide(axis="index")
 # alargar el horizonte crece el error de validación de la mejor red (best_val_rmse de ≈ 0,24 a ≈ 0,50 en unidades z) y
 # desaparecen los candidatos balanceados: en 5 de las 16 configuraciones, todas con H ≥ 21, ninguno cumplió
 # gap_ratio < 0,15 y se aplicó el criterio alterno documentado. Advertencia metodológica: Keras mide el RMSE de
-# entrenamiento con el Dropout activo, así que más Dropout infla el gap_ratio aunque no haya más sobreajuste.
+# entrenamiento con el Dropout activo, así que más Dropout infla el gap_ratio aunque no haya más sobreajuste. Las curvas de aprendizaje (capítulo 3.4) muestran el porqué: el RMSE de validación se dispara tras pocas épocas mientras el de entrenamiento sigue bajando, porque el tramo de validación (2024–2025) tiene precios por encima de todo lo visto en entrenamiento y una red con ReLU que predice el nivel no extrapola; de ahí que las épocas óptimas sean tempranas (3 a 12).
 #
 # **5. ¿Cuánto se degrada con el horizonte?** El MAPE de validación casi se duplica de H = 7 a H = 21; de 21 a 28 ya
 # no empeora (13,5 → 12,5 %), porque a esos plazos todas las redes convergen hacia una tendencia suave.

@@ -2,6 +2,10 @@
 
 Carga un MLP (la mejor arquitectura encontrada) y un par de escaladores (x, y) por horizonte:
 app/model_h{H}.keras y app/scalers_h{H}.joblib. La carpeta se puede cambiar con MODEL_DIR.
+
+INFERENCE_BACKEND=keras (por defecto) usa TensorFlow. INFERENCE_BACKEND=numpy usa los mismos pesos exportados a
+app/weights_h{H}.npz (scripts/export_numpy.py): en inferencia el MLP es una cadena de capas densas con ReLU y el
+Dropout no actúa, así que el resultado es el mismo (verificado en tests/test_model.py) con una fracción de la memoria.
 """
 from __future__ import annotations
 
@@ -13,7 +17,6 @@ os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "3")
 
 import joblib  # noqa: E402
 import numpy as np  # noqa: E402
-import tensorflow as tf  # noqa: E402
 from fastapi import FastAPI, HTTPException  # noqa: E402
 
 from app.schemas import HorizonInfo, Prediction, TimeSeriesData  # noqa: E402
@@ -21,8 +24,36 @@ from app.schemas import HorizonInfo, Prediction, TimeSeriesData  # noqa: E402
 MODEL_DIR = Path(os.environ.get("MODEL_DIR", Path(__file__).resolve().parent))
 VALID_HORIZONS = (7, 14, 21, 28)
 
-models = {H: tf.keras.models.load_model(MODEL_DIR / f"model_h{H}.keras") for H in VALID_HORIZONS
-          if (MODEL_DIR / f"model_h{H}.keras").exists()}
+BACKEND = os.environ.get("INFERENCE_BACKEND", "keras").lower()
+
+
+class NumpyMLP:
+    """Pase hacia adelante de un MLP denso: ReLU en las capas ocultas, salida lineal."""
+
+    def __init__(self, path: Path):
+        z = np.load(path)
+        n = int(z["n_layers"])
+        self.layers = [(z[f"W{i}"], z[f"b{i}"]) for i in range(n)]
+
+    def predict(self, X, verbose=0):
+        h = np.asarray(X, dtype=np.float32)
+        for i, (W, b) in enumerate(self.layers):
+            h = h @ W + b
+            if i < len(self.layers) - 1:
+                h = np.maximum(h, 0.0)
+        return h
+
+
+def _load_model(H: int):
+    if BACKEND == "numpy":
+        p = MODEL_DIR / f"weights_h{H}.npz"
+        return NumpyMLP(p) if p.exists() else None
+    import tensorflow as tf
+    p = MODEL_DIR / f"model_h{H}.keras"
+    return tf.keras.models.load_model(p) if p.exists() else None
+
+
+models = {H: m for H in VALID_HORIZONS if (m := _load_model(H)) is not None}
 scalers = {H: joblib.load(MODEL_DIR / f"scalers_h{H}.joblib") for H in models}
 card_path = MODEL_DIR / "model_card.json"
 card = json.loads(card_path.read_text(encoding="utf8")) if card_path.exists() else {}
@@ -36,7 +67,7 @@ app = FastAPI(title="Pronóstico multihorizonte de BTCUSDT con MLP",
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "horizons": sorted(models)}
+    return {"status": "ok", "horizons": sorted(models), "backend": BACKEND}
 
 
 @app.get("/info", response_model=list[HorizonInfo])

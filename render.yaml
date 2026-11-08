@@ -1,0 +1,23 @@
+# Blueprint de Render: dashboard (Dash) + API de inferencia (FastAPI en Docker).
+# En Render: New + -> Blueprint -> elegir este repositorio.
+services:
+  - type: web
+    name: deep-learning-02-forecasting-mlp
+    runtime: python
+    plan: free
+    buildCommand: pip install -r dashboard/requirements.txt
+    startCommand: gunicorn --chdir dashboard app:server --workers 2 --timeout 120 --bind 0.0.0.0:$PORT
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: API_URL
+        value: https://deep-learning-02-forecasting-api.onrender.com
+  - type: web
+    name: deep-learning-02-forecasting-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.lite   # inferencia en numpy: cabe en 512 MB
+    healthCheckPath: /health
+    autoDeploy: true
