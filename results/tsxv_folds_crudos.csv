@@ -1,0 +1,7 @@
+estrategia,lag,H,folds de tsxv,ventanas de validación por fold,ventanas de entrenamiento por fold
+Group K-Fold,7,7,5,170–170,679–680
+Group K-Fold,28,28,5,48–49,192–196
+Forward Chaining,7,7,2882,1–1,2–2883
+Forward Chaining,28,28,2819,1–1,2–2820
+K-Fold,7,7,2882,1–1,2877–2883
+K-Fold,28,28,2819,1–1,2793–2820

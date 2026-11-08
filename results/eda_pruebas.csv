@@ -1,0 +1,8 @@
+prueba,serie,estadístico,p_valor,"decisión (α = 0,05)"
+ADF,Close (nivel),-1.084430508600113,0.7212407342460079,no se rechaza H0
+ADF,log(Close),-0.731635722954323,0.8383841399473836,no se rechaza H0
+ADF,Retorno log,-39.69409948717688,0.0,se rechaza H0
+Jarque-Bera,Retorno log,45067.061692391486,0.0,se rechaza H0
+Ljung-Box (10),Retorno log,27.13938602818591,0.002475300423529683,se rechaza H0
+Ljung-Box (10),Retorno log al cuadrado,73.9396515274724,7.6492805355795e-12,se rechaza H0
+ARCH-LM (10),Retorno log,60.97733930706113,2.366353672256662e-09,se rechaza H0

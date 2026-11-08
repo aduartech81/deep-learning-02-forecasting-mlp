@@ -1,0 +1,10 @@
+aspecto,resultado
+Datos,3226 velas diarias BTCUSDT (2018-01-01 → 2026-10-31)
+Partición,CV: 2903 días · hold-out: 322 días (desde 2025-12-14)
+Búsqueda de arquitectura,"16 configuraciones lag × H; capas de la red elegida: 2 capa(s): 7, 3 capa(s): 9"
+MAPE medio de validación por estrategia,"forwardChaining: 10.92 %, groupKFold: 33.02 %, kFold: 12.85 %"
+"MLP vs ingenuo (validación, Forward Chaining)",MLP 10.92 % vs ingenuo 5.59 % (MAPE medio)
+Degradación con el horizonte (RMSE FC),"H7: 4,659 → H14: 6,923 → H21: 8,958 → H28: 8,532"
+Hold-out (modelos desplegados),el MLP le gana al ingenuo en 0 de 4 horizontes
+"Residuos (BDS h = 1, validación)",2 % de los folds no rechazan iid
+Volatilidad (hold-out),el MLP le gana al ingenuo en 12 de 16 configuraciones

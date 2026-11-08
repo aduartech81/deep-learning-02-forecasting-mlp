@@ -1,0 +1,94 @@
+{
+  "generado_con_perfil": "full",
+  "simbolo": "BTCUSDT",
+  "variable": "Close",
+  "estrategia_validacion": "Forward Chaining",
+  "entrenamiento": {
+    "desde": "2018-01-02",
+    "hasta": "2025-12-13"
+  },
+  "holdout": {
+    "desde": "2025-12-14",
+    "hasta": "2026-10-31"
+  },
+  "horizontes": {
+    "7": {
+      "lags": 21,
+      "arquitectura": "(64, 128, 256)",
+      "dropout_mask": "(False, False, True)",
+      "epocas": 7,
+      "RMSE_val_USD": 4035.175286689696,
+      "MAPE_val_pct": 6.373750657554292,
+      "RMSE_holdout_USD": 5343.43069303511,
+      "MAPE_holdout_pct": 6.048135367083746,
+      "RMSE_ingenuo_holdout_USD": 3216.5910485409318
+    },
+    "14": {
+      "lags": 7,
+      "arquitectura": "(256, 256)",
+      "dropout_mask": "(False, True)",
+      "epocas": 8,
+      "RMSE_val_USD": 6647.052939595116,
+      "MAPE_val_pct": 9.389017277669838,
+      "RMSE_holdout_USD": 4822.924162126027,
+      "MAPE_holdout_pct": 5.060619769272987,
+      "RMSE_ingenuo_holdout_USD": 4538.545572132576
+    },
+    "21": {
+      "lags": 7,
+      "arquitectura": "(256, 256)",
+      "dropout_mask": "(True, True)",
+      "epocas": 4,
+      "RMSE_val_USD": 6337.056343329613,
+      "MAPE_val_pct": 9.61988898470961,
+      "RMSE_holdout_USD": 5901.038854821067,
+      "MAPE_holdout_pct": 6.166886811192055,
+      "RMSE_ingenuo_holdout_USD": 5694.846390605798
+    },
+    "28": {
+      "lags": 7,
+      "arquitectura": "(256, 256, 64)",
+      "dropout_mask": "(False, False, False)",
+      "epocas": 4,
+      "RMSE_val_USD": 7491.821846007237,
+      "MAPE_val_pct": 10.301692798529846,
+      "RMSE_holdout_USD": 7046.898650340269,
+      "MAPE_holdout_pct": 7.432023525517598,
+      "RMSE_ingenuo_holdout_USD": 6717.408403790164
+    }
+  },
+  "ultimo_cierre_conocido": {
+    "fecha": "2026-10-31",
+    "close": 77582.02
+  },
+  "ultimos_cierres": [
+    86530.0,
+    85766.87,
+    85549.93,
+    83321.81,
+    81754.45,
+    82635.55,
+    82988.36,
+    83773.12,
+    81850.0,
+    83169.0,
+    81682.01,
+    82245.93,
+    81615.64,
+    81491.04,
+    82116.0,
+    81938.4,
+    83028.15,
+    84093.42,
+    81416.09,
+    81189.43,
+    80888.16,
+    80154.09,
+    80150.56,
+    80909.77,
+    81343.5,
+    77991.89,
+    77368.77,
+    77582.02
+  ]
+}
