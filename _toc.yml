@@ -1,0 +1,20 @@
+format: jb-book
+root: intro
+parts:
+  - caption: Datos y validación
+    chapters:
+      - file: notebooks/01_eda
+      - file: notebooks/02_validacion_temporal
+  - caption: Modelado
+    chapters:
+      - file: notebooks/03_architecture_search
+      - file: notebooks/04_model_training
+      - file: notebooks/05_holdout_final
+  - caption: Diagnóstico y extensiones
+    chapters:
+      - file: notebooks/06_residual_analysis
+      - file: notebooks/07_volatilidad
+  - caption: Despliegue y cierre
+    chapters:
+      - file: notebooks/08_despliegue
+      - file: notebooks/09_conclusiones

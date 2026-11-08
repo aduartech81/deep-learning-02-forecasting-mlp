@@ -1,0 +1,13 @@
+# datos crudos: se descargan de la API pública de Binance (ver capítulo 1)
+data/
+# caché de folds de tsxv y predicciones completas (se regeneran)
+cache/
+results/preds/
+# prueba de humo con serie sintética: nunca se sube
+results_smoke/
+_build/
+logs/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+.DS_Store

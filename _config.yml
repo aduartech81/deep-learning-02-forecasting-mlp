@@ -1,0 +1,21 @@
+title: "Pronóstico multihorizonte de Bitcoin con MLP y validación temporal"
+author: Andrés Duarte Chaves
+copyright: "2026"
+only_build_toc_files: true
+exclude_patterns: [data/*, results/*, results_smoke/*, nb_src/*, _build/*, cache/*]
+
+execute:
+  # Los notebooks se ejecutan antes con scripts/run_all.sh (la búsqueda de arquitectura tarda horas);
+  # el libro se construye con las salidas ya guardadas.
+  execute_notebooks: "off"
+
+parse:
+  myst_enable_extensions: [dollarmath, amsmath, colon_fence]
+
+sphinx:
+  config:
+    language: es
+    html_show_copyright: false
+
+html:
+  use_repository_button: false

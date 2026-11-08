@@ -1,0 +1,69 @@
+# Configuración del proyecto. El perfil se elige con la variable de entorno FC_PROFILE
+# (full por defecto). "smoke" es una prueba de humo con una serie SINTÉTICA y una búsqueda mínima.
+defaults: &defaults
+  seed: 42
+  data:
+    symbol: BTCUSDT
+    interval: 1d
+    start: "2018-01-01"
+    end: "2026-11-01"           # fecha fija de corte para que el análisis sea reproducible
+    raw_csv: data/btc_1d.csv
+    synthetic: false
+  target: Close                 # variable objetivo principal (nivel de la serie)
+  vol_window: 30                # ventana (días) de la volatilidad histórica realizada
+  holdout_frac: 0.10            # tramo final reservado; nunca menor a 2 * max(horizons)
+  lags: [7, 14, 21, 28]
+  horizons: [7, 14, 21, 28]
+  cv:
+    strategies: [groupKFold, forwardChaining, kFold]
+    n_steps_jump: 1             # salto entre ventanas en la llamada a tsxv
+    n_blocks: 5                 # bloques (folds) de evaluación en forwardChaining y kFold
+    min_train_frac: 0.5         # la validación de forwardChaining/kFold empieza a mitad de la serie de CV
+  search:
+    strategy: forwardChaining   # estrategia principal de la búsqueda de arquitectura
+    origin_frac: 0.8            # origen del split de búsqueda: entrenamiento hasta el 80 % de la serie de CV
+    neurons: [32, 64, 128, 256]
+    max_layers: 3
+    dropout_rate: 0.5
+    epochs: 30
+    batch_size: 32
+    gap_ratio_max: 0.15
+    n_jobs: -1                  # procesos en paralelo (-1 = todos los núcleos)
+  train:
+    epochs_max: 30              # el entrenamiento por fold usa la época óptima de la búsqueda (<= epochs_max)
+    batch_size: 32
+  paths:
+    results_dir: results
+    figures_dir: notebooks/figs
+    app_dir: app
+
+profiles:
+  full:
+    <<: *defaults
+
+  smoke:
+    <<: *defaults
+    data:
+      symbol: SYNTH
+      interval: 1d
+      start: "2018-01-01"
+      end: "2020-06-30"
+      raw_csv: data/smoke/synthetic_1d.csv
+      synthetic: true
+    search:
+      strategy: forwardChaining
+      origin_frac: 0.8
+      neurons: [32]
+      max_layers: 2
+      dropout_rate: 0.5
+      epochs: 3
+      batch_size: 32
+      gap_ratio_max: 0.15
+      n_jobs: 2
+    train:
+      epochs_max: 3
+      batch_size: 32
+    paths:
+      results_dir: results_smoke
+      figures_dir: results_smoke/figs
+      app_dir: results_smoke/app

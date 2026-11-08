@@ -1,0 +1,10 @@
+data/
+cache/
+results/
+results_smoke/
+notebooks/
+nb_src/
+_build/
+logs/
+dashboard/
+.git/
